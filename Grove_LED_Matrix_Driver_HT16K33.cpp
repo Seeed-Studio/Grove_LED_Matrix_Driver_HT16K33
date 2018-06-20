@@ -47,7 +47,7 @@ void HT16K33::init(uint8_t addr)
 
 void HT16K33::setBrightness(uint8_t brightness)
 {
-    if (brightness > 15) brightness = 15;
+    if (brightness > 2) brightness = 2;
     I2Cdev::writeBytes(_addr, (0xE0 | brightness), 0, (uint8_t *)NULL);
 }
 

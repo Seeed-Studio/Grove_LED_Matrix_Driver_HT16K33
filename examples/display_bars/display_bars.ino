@@ -9,7 +9,7 @@ void setup()
 {
     Wire.begin();
     matrix.init();
-    matrix.setBrightness(10);
+    matrix.setBrightness(0);
     matrix.setBlinkRate(BLINK_OFF);
 }
 
