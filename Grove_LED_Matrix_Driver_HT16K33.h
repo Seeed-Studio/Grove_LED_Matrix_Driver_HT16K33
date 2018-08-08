@@ -41,7 +41,7 @@
 // 8*48 means this buffer can store 48 pictures, if you
 // need more space, please make sure MAX_BIG_BUFFER_SIZE 
 // is a multiple of 8.
-#define MAX_BIG_BUFFER_SIZE         (8*48)   
+#define MAX_BIG_BUFFER_SIZE         (8*20)   
 
 
 enum orientation_type_t

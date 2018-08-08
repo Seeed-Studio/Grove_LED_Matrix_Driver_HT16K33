@@ -47,7 +47,6 @@ void HT16K33::init(uint8_t addr)
 
 void HT16K33::setBrightness(uint8_t brightness)
 {
-    if (brightness > 2) brightness = 2;
     I2Cdev::writeBytes(_addr, (0xE0 | brightness), 0, (uint8_t *)NULL);
 }
 
@@ -231,7 +230,7 @@ void Matrix_8x8::writeString(String s, uint16_t ms_per_letter, action_type_t mod
     if (pic_number == 0) return;
     
 
-    char *p_string = s.c_str();
+    const char *p_string = s.c_str();
     _cursor_start = 0;
     if (mode == ACTION_SCROLLING) 
     {
