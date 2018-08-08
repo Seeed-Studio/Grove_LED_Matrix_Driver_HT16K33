@@ -84,7 +84,7 @@ public:
     * Description
     *    Setting the brightness of matrix
     * Parameter
-    *    brightness: 0-2
+    *    brightness: 0-15
     * Return
     *    Null.
     *************************************************************/   
