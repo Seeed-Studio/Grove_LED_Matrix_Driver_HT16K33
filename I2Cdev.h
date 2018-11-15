@@ -80,6 +80,11 @@ THE SOFTWARE.
     #include "ArduinoWrapper.h"
 #endif
 
+// support Arduino M0
+#ifndef BUFFER_LENGTH
+    #define BUFFER_LENGTH 64
+#endif
+
 // 1000ms default read timeout (modify with "I2Cdev::readTimeout = [ms];")
 #define I2CDEV_DEFAULT_READ_TIMEOUT     1000
 
