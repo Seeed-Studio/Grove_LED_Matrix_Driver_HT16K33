@@ -3,17 +3,15 @@
 
 Matrix_8x8 matrix;
 
-void setup()
-{
+void setup() {
     Wire.begin();
     matrix.init();
     matrix.setBrightness(0);
     matrix.setBlinkRate(BLINK_OFF);
-    
+
 }
 
-void loop()
-{
+void loop() {
     matrix.writeString("!", 1000, ACTION_SHIFT);
     matrix.display();
 
