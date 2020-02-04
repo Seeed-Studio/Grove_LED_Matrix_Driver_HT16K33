@@ -1,4 +1,4 @@
-# Grove - LED Matrix Driver(HT16K33 with 8x8 LED Matrix)
+# Grove - LED Matrix Driver(HT16K33 with 8x8 LED Matrix)  [![Build Status](https://travis-ci.com/Seeed-Studio/Grove_LED_Matrix_Driver_HT16K33.svg?branch=master)](https://travis-ci.com/Seeed-Studio/Grove_LED_Matrix_Driver_HT16K33)
 
 The HT16K33 is a memory mapping and multi-function LED controller driver. 
 
