@@ -5,7 +5,7 @@
 
 Matrix_8x8 matrix;
 int temp = -8;
-orientation_type_t orientation = DISPLAY_ROTATE_0;
+uint8_t orientation = DISPLAY_ROTATE_0;
 
 void setup() {
     Wire.begin();

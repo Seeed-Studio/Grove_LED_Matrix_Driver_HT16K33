@@ -73,8 +73,8 @@ void Matrix_8x8::setDisplayOffset(int8_t x, int8_t y) {
     _offset_y = y;
 }
 
-void Matrix_8x8::setDisplayOrientation(orientation_type_t orientation) {
-    _orientation = orientation;
+void Matrix_8x8::setDisplayOrientation(uint8_t orientation) {
+    _orientation = (orientation_type_t)orientation;
 }
 
 // _cursor_end - _cursor_start >= 1
@@ -255,7 +255,7 @@ void Matrix_8x8::writeString(String s, uint16_t ms_per_letter, action_type_t mod
     }
 }
 
-void Matrix_8x8::writeOnePicture(uint8_t pic[]) {
+void Matrix_8x8::writeOnePicture(const uint8_t *pic) {
     Matrix_8x8::writePictures(pic, 1, 0, ACTION_SHIFT);
 }
 
@@ -264,7 +264,7 @@ void Matrix_8x8::writeOnePicture(uint64_t pic) {
     Matrix_8x8::writePictures((uint64_t*)&pic, 1, 0, ACTION_SHIFT);
 }
 
-void Matrix_8x8::writePictures(uint8_t pic[], uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode) {
+void Matrix_8x8::writePictures(const uint8_t *pic, uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode) {
     if (pic_number > (MAX_BIG_BUFFER_SIZE / 8)) {
         pic_number = MAX_BIG_BUFFER_SIZE / 8;
     }
@@ -297,7 +297,7 @@ void Matrix_8x8::writePictures(uint8_t pic[], uint8_t pic_number, uint16_t ms_pe
     }
 }
 
-void Matrix_8x8::writePictures(uint64_t pic[], uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode) {
+void Matrix_8x8::writePictures(const uint64_t *pic, uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode) {
     if (pic_number > (MAX_BIG_BUFFER_SIZE / 8)) {
         pic_number = MAX_BIG_BUFFER_SIZE / 8;
     }

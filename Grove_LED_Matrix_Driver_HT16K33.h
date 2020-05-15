@@ -122,7 +122,7 @@ class Matrix_8x8 : public HT16K33 {
         Return
          Null.
     *************************************************************/
-    void setDisplayOrientation(orientation_type_t orientation);
+    void setDisplayOrientation(uint8_t orientation);
 
     /*************************************************************
         Description
@@ -232,7 +232,7 @@ class Matrix_8x8 : public HT16K33 {
         Return
          Null.
     *************************************************************/
-    void writeOnePicture(uint8_t pic[]);
+    void writeOnePicture(const uint8_t *pic);
 
     /*************************************************************
         Description
@@ -244,7 +244,7 @@ class Matrix_8x8 : public HT16K33 {
         Return
          Null.
     *************************************************************/
-    void writeOnePicture(uint64_t pic);
+    void writeOnePicture(const uint64_t pic);
 
     /*************************************************************
         Description
@@ -261,8 +261,8 @@ class Matrix_8x8 : public HT16K33 {
         Return
          Null.
     *************************************************************/
-    void writePictures(uint8_t pic[], uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode);
-    void writePictures(uint64_t pic[], uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode);
+    void writePictures(const uint8_t *pic, uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode);
+    void writePictures(const uint64_t *pic, uint8_t pic_number, uint16_t ms_per_pic, action_type_t mode);
 
   private:
     // Low1 High1 Low2 High2 ... Low8 High8
