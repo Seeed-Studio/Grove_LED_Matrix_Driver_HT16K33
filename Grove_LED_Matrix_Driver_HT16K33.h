@@ -34,7 +34,7 @@
 #define __GROVE_LED_MATRIX_DRIVER_HT16K33__
 
 #include "I2Cdev.h"
-
+#include "I2Cdev_interface.h"
 
 
 #define HT16K33_DEFAULT_I2C_ADDR    0x70
@@ -65,8 +65,8 @@ enum blink_type_t {
 class HT16K33 {
   public:
     HT16K33();
-    void init(uint8_t addr = HT16K33_DEFAULT_I2C_ADDR);
-
+    void init(IICInterface* bus,uint8_t addr = HT16K33_DEFAULT_I2C_ADDR);
+    void change_addr(uint8_t addr);
     /*************************************************************
         Description
          Setting the blink rate of matrix
@@ -92,6 +92,7 @@ class HT16K33 {
 
   protected:
     uint8_t _addr;
+    IICInterface* _bus;
 };
 
 

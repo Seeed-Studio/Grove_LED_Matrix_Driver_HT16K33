@@ -44,9 +44,15 @@
 #ifndef _I2CDEV_H_
 #define _I2CDEV_H_
 
+
+#include "I2Cdev_interface.h"
+
+
 // -----------------------------------------------------------------------------
 // I2C interface implementation setting
 // -----------------------------------------------------------------------------
+
+
 #define I2CDEV_IMPLEMENTATION       I2CDEV_ARDUINO_WIRE
 
 // comment this out if you are using a non-optimal IDE/implementation setting
@@ -92,32 +98,101 @@ class I2Cdev {
   public:
     I2Cdev();
 
-    static int8_t readBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t* data,
+    static int8_t readBit(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t* data,
                           uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t* data,
+    static int8_t readBitW(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t* data,
                            uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t* data,
+    static int8_t readBits(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t* data,
                            uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t* data,
+    static int8_t readBitsW(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t* data,
                             uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readByte(uint8_t devAddr, uint8_t regAddr, uint8_t* data, uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readWord(uint8_t devAddr, uint8_t regAddr, uint16_t* data, uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data,
+    static int8_t readByte(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t* data, uint16_t timeout = I2Cdev::readTimeout);
+    static int8_t readWord(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint16_t* data, uint16_t timeout = I2Cdev::readTimeout);
+    static int8_t readBytes(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data,
                             uint16_t timeout = I2Cdev::readTimeout);
-    static int8_t readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t* data,
+    static int8_t readWords(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t* data,
                             uint16_t timeout = I2Cdev::readTimeout);
 
-    static bool writeBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t data);
-    static bool writeBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t data);
-    static bool writeBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data);
-    static bool writeBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data);
-    static bool writeByte(uint8_t devAddr, uint8_t regAddr, uint8_t data);
-    static bool writeWord(uint8_t devAddr, uint8_t regAddr, uint16_t data);
-    static bool writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data);
-    static bool writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t* data);
+    static bool writeBit(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t data);
+    static bool writeBitW(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t data);
+    static bool writeBits(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data);
+    static bool writeBitsW(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data);
+    static bool writeByte(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t data);
+    static bool writeWord(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint16_t data);
+    static bool writeBytes(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data);
+    static bool writeWords(IICInterface &i2c_bus,uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t* data);
 
     static uint16_t readTimeout;
 };
+
+
+// default IIC adapter , use the Hardware IIC
+class Default_IIC_Adapter : public IICInterface {
+
+public:
+    std::string getName() const override {
+        return "Hardware IIC";
+    }
+    
+    void begin(void){
+        Wire.begin();
+    }
+
+    void end(void){
+        Wire.end();
+    }
+
+    void beginTransmission(uint8_t address){
+        Wire.beginTransmission(address);
+    }
+    void beginTransmission(int address){
+        Wire.beginTransmission(address);
+        }
+    uint8_t endTransmission(uint8_t sendStop){
+        return Wire.endTransmission(sendStop);
+    }
+    uint8_t endTransmission(void){
+        return Wire.endTransmission();
+    }
+
+    size_t write(uint8_t data){
+        return Wire.write(data);
+    }
+    size_t write(const uint8_t *data, size_t quantity){
+        return Wire.write(data,quantity);
+    }
+
+    uint8_t requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop){
+        return Wire.requestFrom(address,quantity,sendStop);
+    }
+    uint8_t requestFrom(int address, int quantity, int sendStop){
+        return Wire.requestFrom(address,quantity,sendStop);
+    }
+    uint8_t requestFrom(uint8_t address, uint8_t quantity){
+        return Wire.requestFrom(address,quantity);
+    }
+    uint8_t requestFrom(int address, int quantity){
+        return Wire.requestFrom(address,quantity);
+    }
+
+    int available(void){
+        return Wire.available();
+    }
+    int read(void){
+        return Wire.read();
+    }
+    int peek(void){
+        return Wire.peek();
+    }
+    void flush(void){
+        Wire.flush();
+    }
+};
+
+
+
+
+
 
 #if I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
 //////////////////////

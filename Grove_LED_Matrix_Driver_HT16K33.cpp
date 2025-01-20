@@ -37,19 +37,29 @@
 HT16K33::HT16K33() {
 }
 
-void HT16K33::init(uint8_t addr) {
+void HT16K33::init(IICInterface* bus,uint8_t addr) {
     _addr = addr;
+    _bus = bus;
+    Serial.println("writeBytes");
     // turn on oscillator
-    I2Cdev::writeBytes(_addr, 0x21, 0, (uint8_t*)NULL);
+    I2Cdev::writeBytes(*_bus,_addr, 0x21, 0, (uint8_t*)NULL);
+    Serial.println("writeBytes end");
 }
 
+void HT16K33::change_addr(uint8_t addr) {
+    _addr = addr;
+    // turn on oscillator
+    I2Cdev::writeBytes(*_bus,_addr, 0x21, 0, (uint8_t*)NULL);
+}
+
+
 void HT16K33::setBrightness(uint8_t brightness) {
-    I2Cdev::writeBytes(_addr, (0xE0 | brightness), 0, (uint8_t*)NULL);
+    I2Cdev::writeBytes(*_bus,_addr, (0xE0 | brightness), 0, (uint8_t*)NULL);
 }
 
 
 void HT16K33::setBlinkRate(blink_type_t blink_type) {
-    I2Cdev::writeBytes(_addr, (0x80 | 0x01 | (blink_type << 1)), 0, (uint8_t*)NULL);
+    I2Cdev::writeBytes(*_bus,_addr, (0x80 | 0x01 | (blink_type << 1)), 0, (uint8_t*)NULL);
 }
 
 Matrix_8x8::Matrix_8x8() {
@@ -132,7 +142,7 @@ void Matrix_8x8::display() {
         }
 
 
-        I2Cdev::writeBytes(_addr, 0x00, 16, _buffer);
+        I2Cdev::writeBytes(*_bus,_addr, 0x00, 16, _buffer);
         delay(_ms);
     }
 }

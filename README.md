@@ -64,3 +64,8 @@ global distributors and partners to push open hardware movement.<br>
 
 
 [![Analytics](https://ga-beacon.appspot.com/UA-46589105-3/grove-led-matrix-driver-ht16k33)](https://github.com/igrigorik/ga-beacon)
+
+
+
+## Change log
+2025-1-20: Introduced software IIC to support multi-bus control devices, and introduced the I2Cdev_interface layer to provide a unified interface for hardware IIC and software IIC to the application layer; Added dual-bus demo;
