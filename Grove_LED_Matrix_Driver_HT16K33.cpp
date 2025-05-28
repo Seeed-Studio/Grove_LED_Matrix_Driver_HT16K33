@@ -344,3 +344,13 @@ void Matrix_8x8::writePictures(const uint64_t *pic, uint8_t pic_number, uint16_t
         }
     }
 }
+
+
+
+void HT16K33::display() {
+    // base class - intentionally left blank
+}
+
+void HT16K33::clear() {
+    // base class - intentionally left blank
+}
